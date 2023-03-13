@@ -105,7 +105,7 @@ insert into vendas_produtos (id_venda, id_produto, qtd, valor_unit) values
 /* Comando para contar quantos são os vendedores cadastrados na tabela vendedores*/
 
 select count(id) as quantos
-from vendedores 
+from vendedores;
  
 
 /*Qual vendedor tem mais vendas*/
