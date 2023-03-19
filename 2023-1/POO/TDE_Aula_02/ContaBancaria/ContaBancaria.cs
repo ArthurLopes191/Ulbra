@@ -11,8 +11,8 @@ namespace TransacoesBancarias
         public double Numero{get; private set;}
 
         public ContaBancaria(int numero, double saldoInicial){
-            Numero = numero;
-            Saldo = saldoInicial;
+            this.Numero = numero;
+            this.Saldo = saldoInicial;
         }
         public void Depositar(double valor){
             Saldo += valor;
