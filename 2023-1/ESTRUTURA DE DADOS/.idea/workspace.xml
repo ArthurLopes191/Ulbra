@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a4587e16-511d-446c-bb3b-cb72755a690e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../2022-2/Laboratorio de programacao/alunos/alunos/src/main/java/com/example/alunos/controller/AlunoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../2022-2/Laboratorio de programacao/alunos/alunos/src/main/java/com/example/alunos/model/Aluno.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../2022-2/Laboratorio de programacao/alunos/alunos/src/main/java/com/example/alunos/repository/AlunoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../2022-2/FBD - 2022/Atividades DDL DML/exercicio_dml.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../../2022-2/FBD - 2022/Atividades DDL DML/exercicio_dml.sql" afterDir="false" />
+    <list default="true" id="b6b05993-4ebb-4bdc-90d3-ff72160acef3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ESTRUTURA DE DADOS.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pilha/pilha.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../POO/Crud_Pessoas/bin/Debug/net7.0/Crud_Pessoas.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../POO/Crud_Pessoas/bin/Debug/net7.0/Crud_Pessoas.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../POO/Crud_Pessoas/bin/Debug/net7.0/Crud_Pessoas.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../POO/Crud_Pessoas/bin/Debug/net7.0/Crud_Pessoas.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../POO/Crud_Pessoas/obj/Debug/net7.0/Crud_Pessoas.dll" beforeDir="false" afterPath="$PROJECT_DIR$/../POO/Crud_Pessoas/obj/Debug/net7.0/Crud_Pessoas.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../POO/Crud_Pessoas/obj/Debug/net7.0/Crud_Pessoas.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/../POO/Crud_Pessoas/obj/Debug/net7.0/Crud_Pessoas.pdb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +29,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/arthu/Documents/ULBRA/2023-1/ESTRUTURA DE DADOS"
   }
@@ -43,5 +48,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

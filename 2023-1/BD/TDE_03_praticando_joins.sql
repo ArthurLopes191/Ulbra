@@ -78,6 +78,17 @@ create table compras(
 			on update cascade
 );
 
+alter table compras
+add id_cliente int not null
+foreign key(id_cliente) references clientes(id);
+
+ALTER TABLE compras
+DROP COLUMN id_clientes
+
+alter table compras
+add constraint fk_compras_possuem_cliente
+foreign key(id_cliente) references clientes(id);
+
 create table departamentos(
 	id int auto_increment primary key,
 	nome varchar(100) not null,
@@ -196,6 +207,17 @@ group by c.nome, p.nome;
 
 
 -- Escreva uma consulta que retorne o nome do fornecedor, o nome do produto e o número total de unidades compradas por fornecedor e por produto, apenas para aqueles com mais de 100 unidades compradas. Use um inner join entre as tabelas "fornecedores", "produtos" e "compras" e agrupe os resultados pelo nome do fornecedor e pelo nome do produto.
+select f.nome as nome_fornecedor, p.nome as nome_produto, sum(c.unidades_compradas) as total_unidades_compradas
+from fornecedores f
+	inner join compras c
+		on f.id = c.id_fornecedor
+	inner join produtos p
+		on p.id = c.id_produto
+group by f.nome, p.nome
+having total_unidades_compradas > 100;
+
+-----------------------------------------------
+-- refatorado
 select f.nome as nome_fornecedor, p.nome as nome_produto, sum(c.unidades_compradas) as total_unidades_compradas
 from fornecedores f
 	inner join compras c

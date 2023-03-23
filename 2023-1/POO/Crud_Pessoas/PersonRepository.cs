@@ -20,7 +20,7 @@ namespace Crud_Pessoas
 
             foreach (var p in pessoasMaster)
             {
-                Console.WriteLine($"Nome: {p.Nome} - Id: {p.Id} - Telefone: {p.Telefone}");
+                Console.WriteLine($"Nome: {p.Nome}  \nId: {p.Id}  \nTelefone: {p.Telefone}");
             }
         }
 
