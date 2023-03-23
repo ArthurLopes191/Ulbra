@@ -78,7 +78,7 @@ Produtos que tem “Computador” no nome e que tem quantidade em estoque.
 Os 10 produtos mais orçados no mês de setembro de 2014 e que ainda tem saldo em estoque. Somente os produtos com o valor acima de R$ 500.00.
 */   
 
--- ESSA FOI A PRIMEIRA FORMA QUE TENTEI FAZER:
+
 
 create view produtos_orcados_por_periodo as
 select p.nome as nome_produto, o.status_orcamento, sum(oi.valor_total_item)
@@ -87,43 +87,13 @@ from Orcamentos o
 		on o.id = oi.id_orc
 	inner join Produtos p
 		on p.id = oi.id_prod
-where o.data_orcamento >= '2022-03-01' and o.data_orcamento <= '2022-03-31' and p.saldo > 0 
+where o.data_orcamento >= '2014-09-01' and o.data_orcamento <= '2024-09-31' and p.saldo > 0 
 group by p.nome 
 having p.nome like "%Computador%" 
 limit 10;
 
 -----------------------------------------------------------
--- ESSA SERIA A FORMA CORRETA:
 
-CREATE VIEW Orcamentos_produtos AS
-SELECT p.nome AS produto,
-       o.data_orcamento AS data,
-       SUM(oi.quantidade) AS quantidade,
-       SUM(oi.valor_total_item) AS valor_total
-FROM Produtos p
-LEFT JOIN Orcamentos_itens oi ON p.id = oi.id_prod
-LEFT JOIN Orcamentos o ON oi.id_orc = o.id
-WHERE p.nome LIKE '%Computador%' AND p.saldo > 0
-GROUP BY p.nome, o.data_orcamento
-HAVING o.data_orcamento BETWEEN '2022-03-01' AND '2022-03-31';
-
-UNION
-
-SELECT p.nome AS produto,
-       NULL AS data,
-       SUM(oi.quantidade) AS quantidade,
-       SUM(oi.valor_total_item) AS valor_total
-FROM Produtos p
-JOIN Orcamentos_itens oi ON p.id = oi.id_prod
-JOIN Orcamentos o ON oi.id_orc = o.id
-WHERE o.data_orcamento BETWEEN '2014-09-01' AND '2014-09-30'
-  AND p.valor > 500.00
-GROUP BY p.nome
-HAVING p.saldo > 0
-ORDER BY SUM(oi.quantidade) DESC
-LIMIT 10;
-
-select * from Orcamentos_produtos;
 
 
 /*Faça uma consulta utilizando a view para acrescentar 20% nos produtos que o saldo em estoque é menor ou igual a 5.
@@ -138,26 +108,12 @@ where saldo <= 5;
 /*Delete todos os produtos que não foram orçados.*/
 
 -- não da para criar view com comando delete -- create view deletar_produtos_sem_orcamento as
-DELETE FROM Produtos
-WHERE id not IN (SELECT id FROM produtos_orcados_por_periodo);
--- ou
+
 DELETE FROM Produtos
 WHERE id NOT IN (
     SELECT id_prod FROM Orcamentos_itens
 );
 -- esse delete realiza um subconsulta na tabela orcamentos itens
-
-/*
-delete p.id 
-from Produtos p
-	left join Orcamentos_itens oi
-		on p.id = oi.id_prod
-where oi.quantidade is null      
-group by p.nome
-
-HAVIA TENTADO FAZER O DELETE DESTA FORMA MAS NÃO FUNCIONA
-*/
-
 
 -- Explique quando utilizar o GROUP BY, de um exemplo sql.
 A clausula GROUP BY é usada em consultas SQL para agrupar linhas baseado em semelhanças entre elas.
