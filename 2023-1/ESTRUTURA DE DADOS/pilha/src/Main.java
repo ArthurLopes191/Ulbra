@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Pilha minhaPilha = new Pilha();
+        Pilha minhaPilha = new Pilha(10);
 
         minhaPilha.push(5);
         minhaPilha.push(8);
@@ -12,8 +12,6 @@ public class Main {
         minhaPilha.push(8);
         minhaPilha.push(7);
         minhaPilha.push(5);
-        minhaPilha.push(8);
-        minhaPilha.push(7);
         minhaPilha.pop();
         minhaPilha.pop();
         minhaPilha.pop();
@@ -23,5 +21,4 @@ public class Main {
 
         minhaPilha.top();
     }
-}
 }
