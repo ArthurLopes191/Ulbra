@@ -1,14 +1,14 @@
 public class Fila {
-        String[] vetor = new String[10];
+        String[] vetor ;
+        int fim, inicio;
 
-        int fim = -1;
+    Fila(int value){
+        fim=-1;
+        inicio =-1;
+        vetor = new String[value];
+    }
 
-
-        Fila(int value){
-            fim=-1;
-            vetor = new String[value];
-        }
-    public boolean add(String value){
+    public void add(String value){
         fim++;
         vetor[fim] = value;
     }
@@ -20,17 +20,23 @@ public class Fila {
         fim--;
     }
 
-    void list(){
-        for(int i = 0; i <= fim; i++){
+    void list() {
+        for (int i = 0; i <= fim; i++) {
             System.out.println(vetor[i]);
         }
+    }
 
-        private boolean isFull(){
-            if(fim == vetor.length-1){
-                return true;
-            }
-            return false;
+    public boolean isEmpty(){
+        if (inicio == -1 && fim == -1){
+            return true;
         }
-
+        return false;
+    }
+    public boolean isFull() {
+        if(fim == vetor.length-1){
+            return true;
+        }
+        return false;
     }
 }
+
