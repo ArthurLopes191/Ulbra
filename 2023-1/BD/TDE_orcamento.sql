@@ -43,7 +43,9 @@ VALUES
     ('Camiseta', 150.00, 200),
     ('Torneira', 100.00, 4),
     ('Vaso', 50.00, 5),
-    ('Computador', 600.00, 10);
+    ('Computador', 600.00, 10),
+    ('Produto teste', 100.00, 5),
+    ('Produto teste 3', 150.00, 2);
     
     
 INSERT INTO Orcamentos (data_orcamento, status_orcamento) 
@@ -109,9 +111,11 @@ where saldo <= 5;
 
 -- não da para criar view com comando delete -- create view deletar_produtos_sem_orcamento as
 
-DELETE FROM Produtos
-WHERE id NOT IN (
-    SELECT id_prod FROM Orcamentos_itens
+select Produtos.nome 
+from Produtos
+where id not in(
+    select id_prod FROM Orcamentos_itens
+    where id_prod = Produtos.id
 );
 -- esse delete realiza um subconsulta na tabela orcamentos itens
 
