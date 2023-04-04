@@ -1,14 +1,14 @@
 public class Fila {
-        String[] vetor ;
+        int[] vetor ;
         int fim, inicio;
 
     Fila(int value){
         fim=-1;
         inicio =-1;
-        vetor = new String[value];
+        vetor = new int[value];
     }
 
-    public boolean add(String value){
+    public boolean add(int value){
         if(isFull() != true){
             fim++;
             vetor[fim] = value;
