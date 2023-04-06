@@ -34,7 +34,7 @@ END $$
 DELIMITER ;
 
 
-call tabuada(5);
+call tabuada(7);
 
 
 drop procedure tabuada;

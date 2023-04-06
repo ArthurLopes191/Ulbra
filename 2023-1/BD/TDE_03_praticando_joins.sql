@@ -244,3 +244,7 @@ from clientes c
 right join compras co on c.id = co.id_cliente
 inner join produtos p on co.id_produto = p.id
 group by c.nome, p.nome;
+
+
+
+
