@@ -8,7 +8,6 @@ namespace Ap1
     public class ConsultaRepository
     {
         public static List<Consulta> consultas = new List<Consulta>();
-        static int ultimoId = 0;
 
         public void AdicionarConsulta(Consulta consulta)
         {
@@ -25,7 +24,7 @@ namespace Ap1
         }
 
         public Consulta AcharConsulta(int id){
-            Consulta consultaAchada = consultas.Find(p => p.Id == id);
+            Consulta consultaAchada = consultas.Find(p => p.Id == id); //expressao lambda
             if(consultaAchada == null)
             {
                 Console.WriteLine("\nConsulta não encontrada!");

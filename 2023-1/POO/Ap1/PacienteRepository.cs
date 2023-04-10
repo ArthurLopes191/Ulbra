@@ -8,7 +8,6 @@ namespace Ap1
     public class PacienteRepository
     {
         public static List<Paciente> pacientes = new List<Paciente>();
-        static int ultimoId = 0;
 
         public void AdicionarPaciente(Paciente paciente)
         {

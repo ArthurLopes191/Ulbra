@@ -13,7 +13,8 @@ namespace Ap1
         public string Cidade { get; set; }
         public string Cep { get; set; }
 
-        public Endereco(string logradouro, string numero, string bairro, string cidade, string cep)
+        //public Pessoa Pessoa { get; set; }
+        public Endereco(string logradouro, string numero, string bairro, string cidade, string cep/*, Pessoa pessoa*/)
         {
             Logradouro = logradouro;
             Numero = numero;

@@ -8,7 +8,6 @@ namespace Ap1
     public class MedicoRepository
     {
         public static List<Medico> medicos = new List<Medico>();
-        static int ultimoId = 0;
 
         public void AdicionarMedico(Medico medico)
         {
