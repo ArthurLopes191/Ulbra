@@ -73,7 +73,7 @@ public class Main {
         }
 
         // Imprimindo o tempo gasto na busca
-        System.out.println("Tempo gasto: " + (tempoFinal - tempoInicial) / 1000000.0 + " segundos.");
+        System.out.println("Tempo gasto: " + (tempoFinal - tempoInicial) / 100000000.0 + " segundos.");
     }
 
     // Função que verifica se um padrão está presente na imagem em uma determinada posição
