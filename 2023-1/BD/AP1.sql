@@ -1,6 +1,5 @@
 CREATE DATABASE ap1;
 USE ap1;
-drop database ap1;
 
 CREATE TABLE pacientes(
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -155,8 +154,12 @@ INNER JOIN pacientes p
 	ON c.id_paciente = p.id
 WHERE c.data_consulta > NOW();
 
-select *
-from view_consultas_agendadas;
+select nome_medico, count(m.id) as quantidade_medicos
+from view_consultas_agendadas
+where c.data_consulta = '2023-04-14'
+group by m.nome_medico
+order by quantidade_medicos desc
+limit 1
 
 -- ----------------------------------------------------------------------------------
 
@@ -196,16 +199,22 @@ CREATE PROCEDURE agendar_consulta (
   IN data_consulta DATETIME,
   IN id_medico INT,
   IN id_paciente INT
-)
+  )
 BEGIN
+
   INSERT INTO consultas (data_consulta, id_medico, id_paciente)
   VALUES (data_consulta, id_medico, id_paciente);
+  
 END $$
 DELIMITER ;
 
-CALL agendar_consulta("2022-11-21", 2, 1);
+CALL agendar_consulta("2023-11-21 17:35", 2, 1);
 DROP PROCEDURE agendar_consulta;
 
+
+select *
+from consultas
+where id_medico = 2
 -- ----------------------------------------------------------------------------------
 
 -- CadastrarPaciente
