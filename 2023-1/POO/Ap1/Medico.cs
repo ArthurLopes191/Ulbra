@@ -7,12 +7,13 @@ namespace Ap1
 {
     public class Medico : Pessoa
     {
+        public int Crm { get; private set; }
+        public string Especialidade { get; set; }
         public Medico(int id, string nome, string cpf, string telefone, string sexo, int crm, string especialidade, Endereco endereco) : base(id, nome, cpf, telefone, sexo, endereco)
         {
             Crm = crm;
             Especialidade = especialidade;
         }
-        public int Crm { get; private set; }
-        public string Especialidade { get; set; }
+        
     }
 }
