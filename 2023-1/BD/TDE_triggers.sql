@@ -1,6 +1,4 @@
 create database orcamentos_produtos_triggers;
-drop database orcamentos_produtos_triggers;
-
 use orcamentos_produtos_triggers;
 
 create table produtos(
@@ -34,8 +32,6 @@ prd_codigo int not null,
         on update cascade
 );
 
-alter table orcamentos_produtos
-modify column orp_status int
 -- ------------------------------------------------------------
 
 create table produtos_atualizados(
