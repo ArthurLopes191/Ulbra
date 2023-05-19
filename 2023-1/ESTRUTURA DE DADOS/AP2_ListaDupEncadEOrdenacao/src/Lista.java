@@ -44,7 +44,9 @@ public class Lista {
             fim.setProx(e);
             e.setAnt(fim);
             fim = e;
+            quantidade++;
         }
+
     }
 
     public void showAllLista(){

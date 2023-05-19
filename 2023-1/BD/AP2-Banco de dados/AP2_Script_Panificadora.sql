@@ -62,7 +62,8 @@ foreign key(id_produto) references produtos(id)
     on update cascade
 );
 
-
+select *
+from producao
 --  //////////////////////// 3) Alterar a tabela de Produtos e incluir o tempo de validade. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 alter table produtos 
