@@ -44,6 +44,7 @@ namespace TestandoORM.Data.Repositories
 
         public void Save(Person entity)
         {
+            entity.City = context.Cities.Find(entity.City.Id);
             context.Add(entity);
             context.SaveChanges();
         }

@@ -22,19 +22,20 @@ GetAllCities();
 
 Console.WriteLine("GetById: ");
 
-var p = _personRepository.GetById(5);
+var p = _personRepository.GetById(6);
+var c = _cityRepository.GetById(1);
 
 Console.WriteLine($"Id: {p.Id} | Nome: {p.Nome} | Idade: {p.Idade}");
 
 
-//Console.WriteLine("Deleting: ");
-// _personRepository.Delete(3);
-//GetAllPeople();
+Console.WriteLine("Deleting: ");
+_personRepository.Delete(3);
+GetAllPeople();
 
-//Console.WriteLine("Update");
-//p.CityId = 1;
-//_personRepository.Update(p); 
-//GetAllPeople();
+Console.WriteLine("Update");
+p.City = c;
+_personRepository.Update(p); 
+GetAllPeople();
 
 // -------------------------------------------
 void GetAllPeople()
@@ -43,7 +44,7 @@ var people = _personRepository.GetAll();
 foreach(var item in people)
 {
 
-    Console.WriteLine($"Id: {item.Id} | Nome: {item.Nome} | Idade: {item.Idade}");
+    Console.WriteLine($"Id: {item.Id} | Nome: {item.Nome} | Idade: {item.Idade} | Cidade: {item.City.Name}");
 }
 }
 
