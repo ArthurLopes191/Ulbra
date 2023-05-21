@@ -4,22 +4,25 @@ using TestandoORM.Domain.Entities;
 using TestandoORM.Domain.Interfaces;
 
 var db = new MyContext();
-//Console.WriteLine("Inserting a new person");
-//var person = new Person {Id = 5, Nome = "Lucas", Idade = DateTime.Now};
+
+ICityRepository _cityRepository = new CityRepository(db);
+var city = new City {Id = 2, Name = "Torres"};
+
+Console.WriteLine("Inserting a new person");
+var person = new Person {Nome = "Marcos", City = city, Idade = DateTime.Now};
 
 IPersonRepository _personRepository = new PersonRepository(db);
-//_personRepository.Save(person);
-ICityRepository _cityRepository = new CityRepository(db);
-var city = new City {Id = 1, Name = "Capão da canoa"};
-//Console.WriteLine("Lista de pessoas");
-//GetAllPeople();
+_personRepository.Save(person);
+
+Console.WriteLine("Lista de pessoas");
+GetAllPeople();
 
 Console.WriteLine("Lista de cidades");
 GetAllCities();
 
 Console.WriteLine("GetById: ");
 
-var p = _personRepository.GetById(4);
+var p = _personRepository.GetById(5);
 
 Console.WriteLine($"Id: {p.Id} | Nome: {p.Nome} | Idade: {p.Idade}");
 
@@ -28,9 +31,9 @@ Console.WriteLine($"Id: {p.Id} | Nome: {p.Nome} | Idade: {p.Idade}");
 // _personRepository.Delete(3);
 //GetAllPeople();
 
-Console.WriteLine("Update");
-p.CityId = 1;
-_personRepository.Update(p); 
+//Console.WriteLine("Update");
+//p.CityId = 1;
+//_personRepository.Update(p); 
 //GetAllPeople();
 
 // -------------------------------------------
