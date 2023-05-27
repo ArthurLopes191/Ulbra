@@ -12,7 +12,7 @@ Console.WriteLine("Inserting a new person");
 var person = new Person {Nome = "Marcos", City = city, Idade = DateTime.Now};
 
 IPersonRepository _personRepository = new PersonRepository(db);
-_personRepository.Save(person);
+
 
 Console.WriteLine("Lista de pessoas");
 GetAllPeople();
@@ -43,8 +43,8 @@ void GetAllPeople()
 var people = _personRepository.GetAll();
 foreach(var item in people)
 {
-
-    Console.WriteLine($"Id: {item.Id} | Nome: {item.Nome} | Idade: {item.Idade} | Cidade: {item.City.Name}");
+    var city = item.City == null ? "Sem cidade" : item.City.Name;
+    Console.WriteLine($"Id: {item.Id} | Nome: {item.Nome} | Idade: {item.Idade} | Cidade: {city}");
 }
 }
 
@@ -53,7 +53,6 @@ void GetAllCities()
 var cities = _cityRepository.GetAll();
 foreach(var item in cities)
 {
-
     Console.WriteLine($"Id: {item.Id} | Nome: {item.Name} |");
 }
 }

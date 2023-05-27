@@ -19,12 +19,6 @@ namespace TestandoORM.Data.Repositories
             this.context = context;
         }
 
-        public void Create(Person person){
-            person.City = context.Cities.Find(person.City.Id);
-            context.Add(person);
-            context.SaveChanges();
-        }
-
         public void Delete(int entityId)
         {
             var p = GetById(entityId);
@@ -39,7 +33,7 @@ namespace TestandoORM.Data.Repositories
 
         public Person GetById(int entityId)
         {
-            return context.People.SingleOrDefault(x=>x.Id == entityId);
+            return context.People.Include(x=>x.City).SingleOrDefault(x=>x.Id == entityId);
         }
 
         public void Save(Person entity)
