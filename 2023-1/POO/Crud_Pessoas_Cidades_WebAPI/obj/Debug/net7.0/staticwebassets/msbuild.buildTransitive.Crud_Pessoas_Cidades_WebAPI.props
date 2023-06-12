@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Crud_Pessoas_Cidades_WebAPI.props" />
-</Project>
