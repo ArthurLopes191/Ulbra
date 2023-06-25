@@ -1719,11 +1719,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\Ap2_AS_WebAPI\\Ap2.csproj",
+      "projectUniqueName": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\AS_POO parte 1\\Ap2_AS_WebAPI\\Ap2.csproj",
       "projectName": "Ap2",
-      "projectPath": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\Ap2_AS_WebAPI\\Ap2.csproj",
+      "projectPath": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\AS_POO parte 1\\Ap2_AS_WebAPI\\Ap2.csproj",
       "packagesPath": "C:\\Users\\arthu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\Ap2_AS_WebAPI\\obj\\",
+      "outputPath": "C:\\Users\\arthu\\Documents\\ULBRA\\2023-1\\POO\\AS_POO parte 1\\Ap2_AS_WebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\arthu\\AppData\\Roaming\\NuGet\\NuGet.Config"
