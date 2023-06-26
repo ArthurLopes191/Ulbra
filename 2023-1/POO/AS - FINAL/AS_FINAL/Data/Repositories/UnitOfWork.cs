@@ -23,7 +23,7 @@ namespace AS_FINAL.Data.Repositories
         private IAutorRepository _AutorRepository;
         private ILivroRepository _LivroRepository;
         private IUsuarioRepository _UsuarioRepository;
-
+        private IEmprestimoRepository _EmprestimoRepository;
 
 
         public IAutorRepository AutorRepository
@@ -37,6 +37,10 @@ namespace AS_FINAL.Data.Repositories
         public IUsuarioRepository UsuarioRepository
         {
             get { return _UsuarioRepository ??= new UsuarioRepository(_context); }
+        }
+        public IEmprestimoRepository EmprestimoRepository
+        {
+            get { return _EmprestimoRepository ??= new EmprestimoRepository(_context); }
         }
 
     }

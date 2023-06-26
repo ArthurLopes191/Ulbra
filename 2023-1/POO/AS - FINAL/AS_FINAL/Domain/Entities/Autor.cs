@@ -7,13 +7,10 @@ namespace AS_FINAL.Domain.Entities
 {
     public class Autor : Entity
     {
-
         public String Nome { get; set; }
 
-        public int LivroId { get; set; }
-
         public String Telefone { get; set; }
-
+        public int LivroId { get; set; }
         public Livro Livro { get; set; }
     }
 }

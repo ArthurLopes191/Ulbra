@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AS_FINAL.Domain.Entities;
 using AS_FINAL.Domain.Interfaces;
-using AS_FINAL.Domain.Interfaces.ServiceInterfaces;
 using AS_FINAL.Domain.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,14 @@ namespace AS_FINAL.Controllers
     [Route("api/usuarios")]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-        private readonly IUsuarioService _usuarioService;
+         private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository, IUsuarioService usuarioService, IMapper mapper)
+        public UsuarioController(IUsuarioRepository usuarioRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _usuarioRepository = usuarioRepository;
-            _usuarioService = usuarioService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -31,7 +30,7 @@ namespace AS_FINAL.Controllers
             var usuarios = _mapper.Map<IList<UsuarioDTO>>(await _usuarioRepository.GetAllAsync());
             return HttpMessageOk(usuarios);
         }
-
+        
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -40,55 +39,45 @@ namespace AS_FINAL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(UsuarioViewModel model)
+        public async Task<IActionResult> AddAsync([FromBody] UsuarioViewModel model)
         {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
-
-            var usuario = _mapper.Map<Usuario>(model);
-            var result = await _usuarioService.Add(usuario);
-
-            if (!result) return HttpMessageError("Dados invalidos");
+            var usuario = _mapper.Map<Usuario>(model); 
+            _usuarioRepository.Save(usuario);
+            await _unitOfWork.Commit();
 
             return HttpMessageOk(_mapper.Map<UsuarioDTO>(usuario));
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, UsuarioViewModel model)
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UsuarioViewModel model)
         {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
+            var usuario = await _usuarioRepository.GetByIdAsync(id);
+            if (usuario == null) return NotFound();
 
-            var usuario = _mapper.Map<Usuario>(model);
-            //var result = await _autorService.Update(autor);
+            usuario.Nome = model.Nome;
+            usuario.Telefone = model.Telefone;
+            usuario.Documento = model.Documento;
 
-            //if (!result) return HttpMessageError("Dados invalidos");
+            // Mapeia a lista de autores do LivroViewModel para a lista de autores do Livro
+            usuario.Emprestimos = _mapper.Map<List<Emprestimo>>(model.Emprestimos);
 
-            return HttpMessageOk(_mapper.Map<UsuarioDTO>(usuario));
+            _usuarioRepository.Update(usuario);
+            await _unitOfWork.Commit();
+
+            return Ok(usuario);
         }
 
-        /*
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> RemoveAsync(int id)
         {
-            var produto = await _livroRepository.ObterFornecedorEndereco(id);
+            var usuario = await _usuarioRepository.GetByIdAsync(id);
 
-            if (produto == null) return NotFound();
-
-            var result = await _livroService.Remove(id);
-
-            if (!result) return HttpMessageError("Não foi possível remover o fornecedor");
+            if (usuario == null) return NotFound();
+            var wasRemoved = _usuarioRepository.Delete(id);
+            await _unitOfWork.Commit();
 
             return HttpMessageOk(id);
         }
-        */
-
-        /*
-        [HttpGet("obter-fornecedor-produto-endereco/{id:int}")]
-        public async Task<IActionResult> ObterProdutosFornecedores(int id)
-        {
-            var fornecedor = _mapper.Map<FornecedorDTO>(await _fornecedorRepository.ObterFornecedorProdutoEndereco(id));
-            return HttpMessageOk(fornecedor);
-        }
-        */
 
         private IActionResult HttpMessageOk(dynamic data = null)
         {
@@ -97,7 +86,7 @@ namespace AS_FINAL.Controllers
             else
                 return Ok(new
                 {
-                    data,
+                    data
                 });
         }
 

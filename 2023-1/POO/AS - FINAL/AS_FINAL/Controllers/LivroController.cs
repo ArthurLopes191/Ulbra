@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AS_FINAL.Domain.Entities;
 using AS_FINAL.Domain.Interfaces;
-using AS_FINAL.Domain.Interfaces.ServiceInterfaces;
 using AS_FINAL.Domain.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,14 @@ namespace AS_FINAL.Controllers
      [Route("api/livros")]
     public class LivroController : ControllerBase
     {
-        private readonly ILivroRepository _livroRepository;
-        private readonly ILivroService _livroService;
+      private readonly ILivroRepository _livroRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public LivroController(ILivroRepository livroRepository, ILivroService livroService, IMapper mapper)
+        public LivroController(ILivroRepository livroRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _livroRepository = livroRepository;
-            _livroService = livroService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -36,20 +35,38 @@ namespace AS_FINAL.Controllers
         public async Task<IActionResult> GetByIdAsync(int id)
         {
             var livro = _mapper.Map<LivroDTO>(await _livroRepository.GetByIdAsync(id));
-            return HttpMessageOk();
+            return HttpMessageOk(livro);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(LivroViewModel model)
+        public async Task<IActionResult> AddAsync([FromBody] LivroViewModel model)
         {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
-
-            var livro = _mapper.Map<Livro>(model);
-            var result = await _livroService.Add(livro);
-
-            if (!result) return HttpMessageError("Dados invalidos");
+            var livro = _mapper.Map<Livro>(model); 
+            _livroRepository.Save(livro);
+            await _unitOfWork.Commit();
 
             return HttpMessageOk(_mapper.Map<LivroDTO>(livro));
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] LivroViewModel model)
+        {
+            var livro = await _livroRepository.GetByIdAsync(id);
+            if (livro == null) return NotFound();
+
+            // Atualiza as propriedades do livro com base no LivroViewModel
+            livro.Titulo = model.Titulo;
+            //livro.UsuarioId = model.UsuarioId;
+             livro.Emprestimo = model.Emprestimo;
+
+            // Mapeia a lista de autores do LivroViewModel para a lista de autores do Livro
+            livro.Autores = _mapper.Map<List<Autor>>(model.Autores);
+           
+
+            _livroRepository.Update(livro);
+            await _unitOfWork.Commit();
+
+            return Ok(livro);
         }
 
         [HttpDelete("{id:int}")]
@@ -58,25 +75,9 @@ namespace AS_FINAL.Controllers
             var livro = await _livroRepository.GetByIdAsync(id);
 
             if (livro == null) return NotFound();
-
-            var result = await _livroService.Remove(id);
-
-            if (!result) return HttpMessageError("Não foi possível remover o livro");
-
+            var wasRemoved = _livroRepository.Delete(id);
+            await _unitOfWork.Commit();
             return HttpMessageOk(id);
-        }
-
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, LivroViewModel model)
-        {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
-
-            var livro = _mapper.Map<Livro>(model);
-            var result = await _livroService.Update(livro);
-
-            if (!result) return HttpMessageError("Dados invalidos");
-
-            return HttpMessageOk(_mapper.Map<LivroDTO>(livro));
         }
 
         private IActionResult HttpMessageOk(dynamic data = null)

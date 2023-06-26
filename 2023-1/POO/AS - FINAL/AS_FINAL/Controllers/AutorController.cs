@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AS_FINAL.Domain.Entities;
 using AS_FINAL.Domain.Interfaces;
-using AS_FINAL.Domain.Interfaces.ServiceInterfaces;
 using AS_FINAL.Domain.ViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,14 @@ namespace AS_FINAL.Controllers
      [Route("api/autores")]
     public class AutorController : ControllerBase
     {
-        private readonly IAutorRepository _autorRepository;
-        private readonly IAutorService _autorService;
+       private readonly IAutorRepository _autorRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AutorController(IAutorRepository autorRepository, IAutorService autorService, IMapper mapper)
+        public AutorController(IAutorRepository autorRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _autorRepository = autorRepository;
-            _autorService = autorService;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -40,16 +39,30 @@ namespace AS_FINAL.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddAsync(AutorViewModel model)
+        public async Task<IActionResult> AddAsync([FromBody] AutorViewModel model)
         {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
-
-            var autor = _mapper.Map<Autor>(model);
-            var result = await _autorService.Add(autor);
-
-            if (!result) return HttpMessageError("Dados invalidos");
+            var autor = _mapper.Map<Autor>(model); 
+            _autorRepository.Save(autor);
+            await _unitOfWork.Commit();
 
             return HttpMessageOk(_mapper.Map<AutorDTO>(autor));
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] AutorViewModel model)
+        {
+            var autor = await _autorRepository.GetByIdAsync(id);
+            if (autor == null) return NotFound();
+
+            autor.Nome = model.Nome;
+            autor.Telefone = model.Telefone;
+            autor.LivroId = model.LivroId;
+           
+
+            _autorRepository.Update(autor);
+            await _unitOfWork.Commit();
+
+            return Ok(autor);
         }
 
         [HttpDelete("{id:int}")]
@@ -58,26 +71,10 @@ namespace AS_FINAL.Controllers
             var autor = await _autorRepository.GetByIdAsync(id);
 
             if (autor == null) return NotFound();
-
-            var result = await _autorService.Remove(id);
-
-            if (!result) return HttpMessageError("Não foi possível remover o autor");
+            var wasRemoved = _autorRepository.Delete(id);
+            await _unitOfWork.Commit();
 
             return HttpMessageOk(id);
-        }
-
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] AutorViewModel model)
-        {
-            if (!ModelState.IsValid) return HttpMessageError("Dados incorretos");
-
-            var autor = _mapper.Map<Autor>(model);
-            
-            var result = await _autorService.Update(autor);
-
-            if (!result) return HttpMessageError("Dados invalidos");
-
-            return HttpMessageOk(_mapper.Map<AutorDTO>(autor));
         }
 
         private IActionResult HttpMessageOk(dynamic data = null)

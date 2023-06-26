@@ -14,7 +14,8 @@ namespace AS_FINAL.Domain.Entities
 
         public String Documento { get; set; }
 
-        public List<Livro> LivrosEmprestados { get; set; }
+        public List<Emprestimo> Emprestimos { get; set; }
+
 
     }
 }

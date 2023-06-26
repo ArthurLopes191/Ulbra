@@ -2,8 +2,7 @@
 using AS_FINAL.Data.Context;
 using AS_FINAL.Data.Repositories;
 using AS_FINAL.Domain.Interfaces;
-using AS_FINAL.Domain.Interfaces.ServiceInterfaces;
-using AS_FINAL.Services;
+//using AS_FINAL.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -35,12 +34,13 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddScoped<IAutorRepository, AutorRepository>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-builder.Services.AddScoped<IAutorService, AutorService>();
-builder.Services.AddScoped<ILivroService, LivroService>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+//builder.Services.AddScoped<IAutorService, AutorService>();
+//builder.Services.AddScoped<ILivroService, LivroService>();
+//builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var app = builder.Build();
 

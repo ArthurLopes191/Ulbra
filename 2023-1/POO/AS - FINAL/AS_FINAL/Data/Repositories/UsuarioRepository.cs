@@ -12,66 +12,50 @@ namespace AS_FINAL.Data.Repositories
 {
      public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly DataContext _context;
+         private readonly DataContext _context;
 
         public UsuarioRepository(DataContext context)
         {
             _context = context;
         }
 
-        public void Delete(int entityId)
+        public async Task<IList<Usuario>> GetAllAsync()
         {
-            var p = GetById(entityId);
-            _context.DbSetUsuario.Remove(p);
-            _context.SaveChanges();
-        }
-
-        public IList<Usuario> GetAll()
-        {
-            return _context.DbSetUsuario.ToList();
-        }
-
-        public Task<object> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Usuario GetById(int entityId)
-        {
-            return _context.DbSetUsuario.SingleOrDefault(x=>x.Id == entityId);
-        }
-
-        public void Save(Usuario entity)
-        {
-            _context.Add(entity);
-            _context.SaveChanges();
-        }
-
-        public Task<IList<Usuario>> SearchAll(Expression<Func<Usuario, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Usuario entity)
-        {
-            _context.DbSetUsuario.Update(entity);
-            _context.SaveChanges();
-        }
-
-        bool IBaseRepository<Usuario>.Delete(int entityId)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<IList<Usuario>> IBaseRepository<Usuario>.GetAllAsync()
-        {
-            throw new NotImplementedException();
+            return await _context.DbSetUsuario.ToListAsync();
         }
 
         public async Task<Usuario> GetByIdAsync(int entityId)
         {
             return await _context.DbSetUsuario
                 .FirstOrDefaultAsync(x => x.Id == entityId);
+        }
+
+        public void Save(Usuario entity)
+        {
+            _context.DbSetUsuario.Add(entity);
+        }
+
+        public async Task<IList<Usuario>> SearchAll(Expression<Func<Usuario, bool>> predicate)
+        {
+            return await _context.DbSetUsuario.AsNoTracking().Where(predicate).ToListAsync();
+        }
+
+        public void Update(Usuario entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public bool Delete(int entityId)
+        {
+            var usuario = _context.DbSetUsuario.FirstOrDefault(x => x.Id == entityId);
+
+            if (usuario == null)
+                return false;
+            else
+            {
+                _context.DbSetUsuario.Remove(usuario);
+                return true;
+            }
         }
 
         public void Dispose()

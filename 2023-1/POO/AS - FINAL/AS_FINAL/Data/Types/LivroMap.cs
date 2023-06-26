@@ -10,9 +10,9 @@ namespace AS_FINAL.Data.Types
 {
     public class LivroMap : IEntityTypeConfiguration<Livro>
     {
-         public void Configure(EntityTypeBuilder<Livro> builder)
+        public void Configure(EntityTypeBuilder<Livro> builder)
         {
-            builder.ToTable("livros");
+          builder.ToTable("livros");
 
             builder.Property(i => i.Id).HasColumnName("id");
 
@@ -23,22 +23,18 @@ namespace AS_FINAL.Data.Types
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 
-            builder.Property(i => i.Isbn)
-                .HasColumnName("isbn")
-                .IsRequired()
-                .HasColumnType("varchar(50)");
 
-            builder.Property(i => i.UsuarioId)
-                .HasColumnName("usuario_id")
-                .HasColumnType("INTEGER")
-                .IsRequired();    
-
-            builder.HasMany(l => l.Autores)
+          // Configuração do relacionamento com Autor
+           builder.HasMany(l => l.Autores)
                 .WithOne(a => a.Livro)
                 .HasForeignKey(a => a.LivroId)
                 .HasConstraintName("FK_Livro_Autores")
                 .OnDelete(DeleteBehavior.Restrict);
 
+           // Configuração do relacionamento com Emprestimo
+           builder.HasOne(l => l.Emprestimo)
+                  .WithOne(e => e.Livro)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

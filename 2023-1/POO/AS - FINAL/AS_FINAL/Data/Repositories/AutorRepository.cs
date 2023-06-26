@@ -12,7 +12,7 @@ namespace AS_FINAL.Data.Repositories
 {
      public class AutorRepository : IAutorRepository
     {
-        private readonly DataContext _context;
+      private readonly DataContext _context;
 
         public AutorRepository(DataContext context)
         {
@@ -35,19 +35,14 @@ namespace AS_FINAL.Data.Repositories
             _context.DbSetAutor.Add(entity);
         }
 
-        public void Update(Autor entity)
-        {
-            _context.DbSetAutor.Update(entity);
-        }
-
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
-
         public async Task<IList<Autor>> SearchAll(Expression<Func<Autor, bool>> predicate)
         {
             return await _context.DbSetAutor.AsNoTracking().Where(predicate).ToListAsync();
+        }
+
+        public void Update(Autor entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public bool Delete(int entityId)
@@ -61,6 +56,11 @@ namespace AS_FINAL.Data.Repositories
                 _context.DbSetAutor.Remove(autor);
                 return true;
             }
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

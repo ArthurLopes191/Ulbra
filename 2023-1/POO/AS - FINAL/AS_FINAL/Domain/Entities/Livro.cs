@@ -10,12 +10,8 @@ namespace AS_FINAL.Domain.Entities
 
         public String Titulo { get; set; }
 
-        public String Isbn { get; set; }
-
-        public int UsuarioId { get; set; }
-
-        public Usuario Usuario { get; set; }
-
         public List<Autor> Autores { get; set; }
+
+        public Emprestimo Emprestimo { get; set; }
     }
 }

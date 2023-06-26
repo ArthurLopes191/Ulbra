@@ -19,36 +19,15 @@ namespace AS_FINAL.Data.Repositories
             _context = context;
         }
 
-        public void Delete(int entityId)
+        public async Task<IList<Livro>> GetAllAsync()
         {
-            var p = GetById(entityId);
-            _context.DbSetLivro.Remove(p);
-            _context.SaveChanges();
+            return await _context.DbSetLivro.ToListAsync();
         }
 
-        public void Dispose()
+        public async Task<Livro> GetByIdAsync(int entityId)
         {
-            throw new NotImplementedException();
-        }
-
-        public IList<Livro> GetAll()
-        {
-            return _context.DbSetLivro.ToList();
-        }
-
-        public Task<object> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Livro GetById(int entityId)
-        {
-            return _context.DbSetLivro.SingleOrDefault(x=>x.Id == entityId);
-        }
-
-        public Task<object> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            return await _context.DbSetLivro
+                .FirstOrDefaultAsync(x => x.Id == entityId);
         }
 
         public void Save(Livro entity)
@@ -57,36 +36,33 @@ namespace AS_FINAL.Data.Repositories
             _context.SaveChanges();
         }
 
-        public Task<IList<Livro>> SearchAll(Expression<Func<Livro, bool>> predicate)
+        public async Task<IList<Livro>> SearchAll(Expression<Func<Livro, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return await _context.DbSetLivro.AsNoTracking().Where(predicate).ToListAsync();
         }
 
         public void Update(Livro entity)
         {
-            _context.DbSetLivro.Update(entity);
-            _context.SaveChanges();
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
-        bool IBaseRepository<Livro>.Delete(int entityId)
+        public bool Delete(int entityId)
         {
-            throw new NotImplementedException();
+            var livro = _context.DbSetLivro.FirstOrDefault(x => x.Id == entityId);
+
+            if (livro == null)
+                return false;
+            else
+            {
+                _context.DbSetLivro.Remove(livro);
+                return true;
+            }
         }
 
-
-
-        Task<IList<Livro>> IBaseRepository<Livro>.GetAllAsync()
+        public void Dispose()
         {
-            throw new NotImplementedException();
+            _context?.Dispose();
         }
-
-
-
-        Task<Livro> IBaseRepository<Livro>.GetByIdAsync(int entityId)
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }

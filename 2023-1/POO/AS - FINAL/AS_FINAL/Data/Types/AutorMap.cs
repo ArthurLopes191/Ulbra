@@ -10,7 +10,7 @@ namespace AS_FINAL.Data.Types
 {
     public class AutorMap : IEntityTypeConfiguration<Autor>
     {
-         public void Configure(EntityTypeBuilder<Autor> builder)
+            public void Configure(EntityTypeBuilder<Autor> builder)
         {
             builder.ToTable("autores");
 
@@ -26,11 +26,11 @@ namespace AS_FINAL.Data.Types
             builder.Property(i => i.Telefone)
                 .HasColumnName("telefone")
                 .IsRequired()
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(20)");
 
-            builder.Property(i => i.LivroId);
-
-            
+            builder.HasOne(a => a.Livro)
+               .WithMany(l => l.Autores)
+               .HasForeignKey(a => a.LivroId);
         }
     }
 }
