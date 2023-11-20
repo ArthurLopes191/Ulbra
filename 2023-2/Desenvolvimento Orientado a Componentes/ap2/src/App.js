@@ -19,12 +19,13 @@ function App() {
     <div className="App">
       <Header/>
       <div className="column-flex">
+      <Formulario onCadastro={handleCadastro} />
         <div className="column-flex2">
           <MensagemBoasVindas pessoa={nomePessoa}/>
           <Localizacao/>
           <ListaPessoas pessoas={pessoas} />
         </div>
-      <Formulario onCadastro={handleCadastro} />
+      
       </div>
     </div>
   );

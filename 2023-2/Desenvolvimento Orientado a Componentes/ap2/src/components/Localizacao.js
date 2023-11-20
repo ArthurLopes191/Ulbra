@@ -8,7 +8,7 @@ function Localizacao(){
 
     function handleClickEnableDetails(){
         fetch('https://viacep.com.br/ws/95560000/json/')
-        .then(response => response.json())
+        .then(response => response.json()) //função callback
         .then(data => {
     
         setEndereco(data);
