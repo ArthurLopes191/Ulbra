@@ -11,6 +11,8 @@ function App() {
 
   const [products, setProduct] = useState()
 
+  
+
   return (
     <ProductContext.Provider value={{products, setProduct}}>
     <div className='App'>

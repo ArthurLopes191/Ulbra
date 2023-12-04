@@ -7,7 +7,7 @@ function Header({title}){
             <nav>
                <Link className="nav-link" to={"/"}>Home</Link>
                <Link className="nav-link" to={"/produtos"}>Produtos</Link>
-               <Link className="nav-link" to={"/contato"}>Contato</Link>
+               <Link className="nav-link" to={"/contato"}>Cadastrar Produto</Link>
             </nav>
         </div>
     )

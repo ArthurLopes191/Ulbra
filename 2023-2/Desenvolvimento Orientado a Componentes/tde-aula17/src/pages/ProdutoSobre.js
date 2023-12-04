@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {ProductContext} from "../contexts/productContext"
+import styles from "./ProdutosSobre.css"
+import Header from "../components/Header";
 
 function ProdutoSobre(){
     const parms = useParams()
@@ -25,11 +27,19 @@ function ProdutoSobre(){
         <>
         {data &&
             <div>
-                <h1>Sobre o produto {data.id} - {data.name} - {data.price}</h1>
-                <h1>{data.description}</h1>
-                <Link to="/">Home</Link>
+                <Header/>
+                <div className="containerCard" >
+                    <div className="cardSobre">
+                        <img src={data.photo_url}/>
+                        <h1>Sobre o produto {data.id} - {data.name} - R${data.price}</h1>
+                        <h1>{data.description}</h1>
+                        <Link className="linkVoltar" to="/produtos">Voltar</Link>
+                    </div>
+                </div>
             </div>
+            
         }
+        
         </>
     )
 }

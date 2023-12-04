@@ -1,3 +1,27 @@
 h1{
     text-align: center;
 }
+
+.containerProdutos{
+    margin: 0 70px;
+    display: flex;
+    flex-wrap:wrap;
+}
+
+.cardProduto{
+    cursor: pointer;
+    display: inline-block;
+    color: white;
+    margin: 30px;
+    height: 400px;
+    width: 380px;
+    background-color: black;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.cardProduto img{
+    width: 380px;
+    height: 250px;
+    border-radius: 25px 25px 0 0;
+}
