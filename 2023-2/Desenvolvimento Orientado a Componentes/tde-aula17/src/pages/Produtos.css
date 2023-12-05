@@ -2,26 +2,45 @@ h1{
     text-align: center;
 }
 
+/*
 .containerProdutos{
     margin: 0 70px;
     display: flex;
     flex-wrap:wrap;
 }
 
+*/
+
 .cardProduto{
-    cursor: pointer;
-    display: inline-block;
+    cursor: grab;
+    padding: 30px;
     color: white;
-    margin: 30px;
+    margin: 80px;
     height: 400px;
-    width: 380px;
-    background-color: black;
+    
     border-radius: 25px;
+    
+}
+
+.productContent{
+    padding: 5px;
+    margin: 0;
+    height: 150px;
+    width: 382px;
+    background-color: black;
+    border-radius: 0  0 25px 25px;
     text-align: center;
 }
 
+.productContent h1{
+    cursor: pointer;
+    
+}
+
 .cardProduto img{
-    width: 380px;
+    border: solid black 1px;
+    cursor: pointer;
+    width: 390px;
     height: 250px;
     border-radius: 25px 25px 0 0;
 }

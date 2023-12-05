@@ -4,9 +4,20 @@ import styles from "./Produtos.css"
 import { useNavigate } from "react-router-dom"
 import {ProductContext} from "../contexts/productContext"
 import useFetch from "../hooks/useFetch"
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function Produtos(){
 
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+
+      };
 
     //const [products, setProducts] = useState();
     
@@ -39,15 +50,19 @@ function Produtos(){
         <div>
             <Header/>
             <h1>Produtos</h1>
-            <div className="containerProdutos">
+            
+            <Slider {...settings}>
                 {data && data.map((product) =>{
-                    return <div className="cardProduto" onClick={() => handleClick(product.id)} > 
-                    <img src={product.photo_url} alt=""/> 
-                    <h1>{product.name}</h1>
-                    <p>R${product.price}</p>
+                    return <div className="cardProduto" > 
+                    <img src={product.photo_url} onClick={() => handleClick(product.id)} alt=""/> 
+                        <div className="productContent">
+                            <h1 onClick={() => handleClick(product.id)}>{product.name} </h1>
+                            <p>R${product.price}</p>
+                        </div>
                     </div>
                 })}
-            </div> 
+            </Slider>    
+            
         </div>
     )
 }

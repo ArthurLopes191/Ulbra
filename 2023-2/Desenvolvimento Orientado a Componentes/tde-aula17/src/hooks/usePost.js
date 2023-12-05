@@ -8,7 +8,9 @@ async function usePost(formData) {
         body: JSON.stringify(formData),
     });
 
-    
+    const data = await response.json();
+
+    return data;
 }
 
 export default usePost
